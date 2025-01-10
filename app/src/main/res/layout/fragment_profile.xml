@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Username -->
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username: "
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Area -->
+    <TextView
+        android:id="@+id/areaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Area: "
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Subarea -->
+    <TextView
+        android:id="@+id/subareaTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subarea: "
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Logout Button -->
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="#ffffff"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+</LinearLayout>

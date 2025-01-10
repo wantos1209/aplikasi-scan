@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Main Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BACK"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_background"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Information Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/item_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/nomorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nomor"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/createdAtTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Created At"
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/totalBarangTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Barang"
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:id="@+id/totalBarangMissTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Barang Miss"
+                android:textSize="14sp"
+                android:textColor="@color/dark_gray" />
+        </LinearLayout>
+
+        <!-- Buttopn Export -->
+        <Button
+            android:id="@+id/downloadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:text="Download"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_background"
+            android:padding="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Detail List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+
+    <!-- Manual Button (Top Right Corner) -->
+    <Button
+        android:id="@+id/manualButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_button"
+        android:padding="8dp"
+        android:text="Manual"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <!-- BottomAppBar -->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/primary_color"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp" />
+
+    <!-- FloatingActionButton -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/feb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Scan Barcode"
+        app:backgroundTint="@color/secondary_color"
+        app:tint="@android:color/white"
+        android:src="@drawable/qr_scan"
+        app:layout_anchor="@id/bottomAppBar" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
