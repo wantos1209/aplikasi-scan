@@ -18,12 +18,14 @@ public interface ApiService {
 
     // API Pengiriman
     // API Pengiriman
-    @POST("api/pengiriman")
-    Call<PengirimanResponse> getPengiriman(@Header("Authorization") String token);
+    @POST("api/pengiriman/{subarea_id}")
+    Call<PengirimanResponse> getPengiriman(@Header("Authorization") String token, @Path("subarea_id") String subareaId);
 
     @POST("api/createpengiriman")
-    Call<CreatePengirimanResponse> createPengiriman(@Header("Authorization") String token);
-
+    Call<CreatePengirimanResponse> createPengiriman(
+            @Header("Authorization") String token,
+            @Body CreatePengirimanRequest request
+    );
     @POST("api/pengirimandetail/{pengiriman_id}")
     Call<DetailResponse> getPengirimanDetail(
             @Header("Authorization") String token,
@@ -50,4 +52,7 @@ public interface ApiService {
             @Path("pengiriman_id") int pengirimanId,
             @Path("pengirimandetail_id") int pengirimanDetailId
     );
+
+    @POST("api/listsubarea")
+    Call<SubareaResponse> getSubareas(@Header("Authorization") String token);
 }

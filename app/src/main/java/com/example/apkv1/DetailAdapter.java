@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.core.content.ContextCompat;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +22,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import androidx.core.content.ContextCompat; // Pastikan import ini ada
+
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
 
     private List<DetailResponse.DataDetail> detailList;
     private int pengirimanId;
     private Context context;
+    private int subareaId;
 
-    public DetailAdapter(List<DetailResponse.DataDetail> detailList, int pengirimanId, Context context) {
+    public DetailAdapter(List<DetailResponse.DataDetail> detailList, int pengirimanId, Context context, int subareaId) {
         this.detailList = detailList;
         this.pengirimanId = pengirimanId;
         this.context = context;
+        this.subareaId = subareaId;  // Set subarea_id dari data utama
     }
 
     @NonNull
@@ -45,6 +50,13 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         DetailResponse.DataDetail detail = detailList.get(position);
         holder.noSttTextView.setText("No STT: " + detail.getNo_stt());
         holder.subareaTextView.setText("Subarea: " + detail.getSubarea_nama());
+
+        // Set background berdasarkan perbandingan subarea_id
+        if (detail.getSubarea_id() != subareaId) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.pink)); // Background pink jika tidak cocok
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent)); // Default jika cocok
+        }
 
         // Tombol Remove dengan dialog konfirmasi
         holder.removeButton.setOnClickListener(v -> {
@@ -98,7 +110,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         return detailList.size();
     }
 
-    // Tambahkan metode untuk mendapatkan data detail
+    // Menambahkan metode untuk mendapatkan daftar data detail
     public List<DetailResponse.DataDetail> getDetailList() {
         return detailList;
     }
@@ -115,3 +127,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         }
     }
 }
+
+
+

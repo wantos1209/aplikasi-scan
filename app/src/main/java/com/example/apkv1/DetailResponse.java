@@ -3,11 +3,13 @@ package com.example.apkv1;
 import java.util.List;
 
 public class DetailResponse {
+
     private String status;
     private String message;
-    private Data data;
-    private List<DataDetail> data_detail;
+    private Data data;  // Data utama pengiriman
+    private List<DataDetail> data_detail;  // Daftar detail pengiriman
 
+    // Getter dan Setter untuk status, message, data, dan data_detail
     public String getStatus() {
         return status;
     }
@@ -24,6 +26,7 @@ public class DetailResponse {
         return data_detail;
     }
 
+    // Kelas Data yang berisi data utama pengiriman
     public static class Data {
         private int id;
         private int userapk_id;
@@ -32,7 +35,14 @@ public class DetailResponse {
         private String updated_at;
         private int totalbarang;
         private int totalbarang_miss;
+        private int subarea_id;  // subarea_id dari data utama pengiriman
 
+        // Getter untuk subarea_id
+        public int getSubarea_id() {
+            return subarea_id;
+        }
+
+        // Getter lainnya
         public int getId() {
             return id;
         }
@@ -62,25 +72,28 @@ public class DetailResponse {
         }
     }
 
+    // Kelas DataDetail yang berisi detail pengiriman
     public static class DataDetail {
         private int id;
         private int pengiriman_id;
-        private int subarea_id;
+        private int subarea_id;  // subarea_id dari detail pengiriman
         private String no_stt;
         private String created_at;
         private String updated_at;
         private String subarea_nama;
 
+        // Getter untuk subarea_id
+        public int getSubarea_id() {
+            return subarea_id;
+        }
+
+        // Getter lainnya
         public int getId() {
             return id;
         }
 
         public int getPengiriman_id() {
             return pengiriman_id;
-        }
-
-        public int getSubarea_id() {
-            return subarea_id;
         }
 
         public String getNo_stt() {
@@ -100,3 +113,5 @@ public class DetailResponse {
         }
     }
 }
+
+

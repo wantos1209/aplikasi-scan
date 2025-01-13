@@ -1,37 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/item_background"
-    android:layout_margin="8dp">
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/noSttTextView"
-        android:layout_width="wrap_content"
+    <!-- LinearLayout untuk menempatkan teks No STT dan Subarea secara vertikal -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="No STT"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:paddingBottom="4dp" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/subareaTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Subarea"
-        android:textSize="14sp"
-        android:textColor="@color/dark_gray" />
+        <!-- Text No STT -->
+        <TextView
+            android:id="@+id/noSttTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No STT"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp"/>
 
+        <!-- Text Subarea -->
+        <TextView
+            android:id="@+id/subareaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subarea"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <!-- Tombol Remove (X) -->
     <Button
         android:id="@+id/removeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remove"
+        android:text="X"
+        android:textSize="18sp"
         android:textColor="@android:color/white"
-        android:background="@drawable/button_background"
-        android:layout_gravity="end"
-        android:padding="8dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginStart="8dp"
+        android:padding="4dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:layout_gravity="center_vertical"/>
 </LinearLayout>

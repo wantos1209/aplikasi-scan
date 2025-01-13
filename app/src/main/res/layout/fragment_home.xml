@@ -1,24 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Tombol Create -->
-    <Button
-        android:id="@+id/createButton"
+    <!-- Horizontal layout for Spinner and Create button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Spinner for subarea selection -->
+        <Spinner
+            android:id="@+id/subareaSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!-- Button to create new pengiriman -->
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- ProgressBar for loading -->
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_button"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp" />
+        android:visibility="gone" /> <!-- Initial visibility is gone -->
 
-    <!-- RecyclerView -->
+    <!-- RecyclerView to display data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Button to refresh the data (initially hidden) -->
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>

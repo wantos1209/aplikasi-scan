@@ -32,13 +32,13 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.NotificationManager;
 import android.app.NotificationChannel;
 import android.content.Context;
 import androidx.core.app.NotificationCompat;
-
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -78,7 +78,6 @@ public class DetailActivity extends AppCompatActivity {
         downloadButton = findViewById(R.id.downloadButton);
         downloadButton.setOnClickListener(v -> exportToExcel());
 
-
         // Manual button
         manualButton = findViewById(R.id.manualButton);
         manualButton.setOnClickListener(v -> showManualInputDialog());
@@ -114,16 +113,22 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(Call<DetailResponse> call, Response<DetailResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     DetailResponse.Data data = response.body().getData();
+
                     nomorTextView.setText("Nomor: " + data.getNomor());
-                    createdAtTextView.setText("Created At: " + data.getCreated_at());
+                    createdAtTextView.setText("Tanggal: " + data.getCreated_at());
                     totalBarangTextView.setText("Total Barang: " + data.getTotalbarang());
-                    totalBarangMissTextView.setText("Total Barang Miss: " + data.getTotalbarang_miss());
+                    totalBarangMissTextView.setText("Total Miss: " + data.getTotalbarang_miss());
 
-                    adapter = new DetailAdapter(response.body().getDataDetail(), pengirimanId, DetailActivity.this);
+                    int subareaId = data.getSubarea_id(); // Ambil subarea_id dari data utama
 
+                    // Mengurutkan data detail sebelum dikirim ke adapter
+                    List<DetailResponse.DataDetail> sortedDetailList = sortDetailList(response.body().getDataDetail(), subareaId);
+
+                    // Pass subarea_id dan sorted list ke adapter
+                    adapter = new DetailAdapter(sortedDetailList, pengirimanId, DetailActivity.this, subareaId);
                     recyclerView.setAdapter(adapter);
                 } else {
-                    Toast.makeText(DetailActivity.this, "Gagal memuat detail: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailActivity.this, "Gagal memuat detail", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -132,6 +137,25 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(DetailActivity.this, "Request gagal: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Fungsi untuk mengurutkan data_detail
+    private List<DetailResponse.DataDetail> sortDetailList(List<DetailResponse.DataDetail> dataList, int subareaId) {
+        // Membagi menjadi dua list: yang cocok dan tidak cocok
+        List<DetailResponse.DataDetail> unmatched = new ArrayList<>();
+        List<DetailResponse.DataDetail> matched = new ArrayList<>();
+
+        for (DetailResponse.DataDetail detail : dataList) {
+            if (detail.getSubarea_id() != subareaId) {
+                unmatched.add(detail); // Tidak cocok, taruh di atas
+            } else {
+                matched.add(detail); // Cocok, taruh di bawah
+            }
+        }
+
+        // Gabungkan unmatched di depan matched
+        unmatched.addAll(matched);
+        return unmatched; // Kembalikan hasil yang sudah diurutkan
     }
 
     private void startScanner() {
@@ -276,7 +300,4 @@ public class DetailActivity extends AppCompatActivity {
 
         notificationManager.notify(1, builder.build());
     }
-
-
-
 }
