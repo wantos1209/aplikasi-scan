@@ -56,10 +56,24 @@ public class DetailActivity extends AppCompatActivity {
                     // Setelah pemindaian berhasil, kirimkan data dan mulai scan lagi
                     submitData(result.getContents());
                     startScanner(); // Memulai scan lagi
+
+                    // Panggil fetchDetail untuk memperbarui data
+                    int pengirimanId = getIntent().getIntExtra("pengiriman_id", -1);
+                    if (pengirimanId != -1) {
+                        fetchDetail(pengirimanId); // Memperbarui detail pengiriman setelah pemindaian
+                    }
+
                 } else {
                     Toast.makeText(this, "Scan dibatalkan", Toast.LENGTH_SHORT).show();
+
+                    // Panggil fetchDetail meskipun pemindaian dibatalkan (optional)
+                    int pengirimanId = getIntent().getIntExtra("pengiriman_id", -1);
+                    if (pengirimanId != -1) {
+                        fetchDetail(pengirimanId); // Memperbarui detail pengiriman jika pemindaian dibatalkan
+                    }
                 }
             });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

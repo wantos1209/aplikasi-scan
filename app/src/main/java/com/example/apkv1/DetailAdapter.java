@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import android.util.Log;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,13 +61,21 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
         // Tombol Remove dengan dialog konfirmasi
         holder.removeButton.setOnClickListener(v -> {
+            // Log untuk melihat nilai detail.getId()
+            Log.d("DetailActivity", "ID STT yang akan dihapus: " + detail.getId());
+
             new AlertDialog.Builder(context)
                     .setTitle("Konfirmasi")
                     .setMessage("Apakah Anda yakin ingin menghapus nomor STT ini?")
-                    .setPositiveButton("Ya", (dialog, which) -> deleteDetail(detail.getId(), position))
+                    .setPositiveButton("Ya", (dialog, which) -> {
+                        // Hapus item dari list terlebih dahulu
+                        int currentPosition = holder.getAdapterPosition(); // Pastikan posisi yang benar
+                        deleteDetail(detail.getId(), currentPosition);
+                    })
                     .setNegativeButton("Tidak", (dialog, which) -> dialog.dismiss())
                     .show();
         });
+
     }
 
     private void deleteDetail(int detailId, int position) {
@@ -88,8 +97,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     ApiResponse apiResponse = response.body();
                     if ("success".equalsIgnoreCase(apiResponse.getStatus())) {
                         Toast.makeText(context, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                        detailList.remove(position); // Hapus dari daftar
-                        notifyItemRemoved(position); // Perbarui RecyclerView
+                        // Hapus dari daftar di posisi yang benar
+                        detailList.remove(position); // Hapus item dari list berdasarkan posisi
+                        notifyItemRemoved(position); // Notifikasi RecyclerView untuk menghapus item
                     } else {
                         Toast.makeText(context, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -104,6 +114,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
