@@ -53,7 +53,9 @@ public class DetailActivity extends AppCompatActivity {
             new ScanContract(),
             result -> {
                 if (result.getContents() != null) {
+                    // Setelah pemindaian berhasil, kirimkan data dan mulai scan lagi
                     submitData(result.getContents());
+                    startScanner(); // Memulai scan lagi
                 } else {
                     Toast.makeText(this, "Scan dibatalkan", Toast.LENGTH_SHORT).show();
                 }
@@ -114,7 +116,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     DetailResponse.Data data = response.body().getData();
 
-                    nomorTextView.setText("Nomor: " + data.getNomor());
+                    nomorTextView.setText("Nomor: " + data.getNomor() + " (" + data.getArea() + ")");
                     createdAtTextView.setText("Tanggal: " + data.getCreated_at());
                     totalBarangTextView.setText("Total Barang: " + data.getTotalbarang());
                     totalBarangMissTextView.setText("Total Miss: " + data.getTotalbarang_miss());
@@ -162,10 +164,11 @@ public class DetailActivity extends AppCompatActivity {
         ScanOptions options = new ScanOptions();
         options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
         options.setPrompt("Arahkan kamera ke barcode/QR code");
-        options.setCameraId(0);
-        options.setBeepEnabled(true);
-        options.setBarcodeImageEnabled(false);
-        barcodeLauncher.launch(options);
+        options.setCameraId(0); // Kamera belakang
+        options.setBeepEnabled(true); // Aktifkan suara beep setelah pemindaian
+        options.setBarcodeImageEnabled(false); // Nonaktifkan penyimpanan gambar barcode
+
+        barcodeLauncher.launch(options); // Mulai scan barcode
     }
 
     private void showManualInputDialog() {
@@ -216,9 +219,14 @@ public class DetailActivity extends AppCompatActivity {
             public void onResponse(Call<DestinasiResponse> call, Response<DestinasiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     DestinasiResponse destinasiResponse = response.body();
-                    if (destinasiResponse.isExist()) {
-                        Toast.makeText(DetailActivity.this, "stt berhasil diinput", Toast.LENGTH_SHORT).show();
-                        fetchDetail(pengirimanId); // Refresh detail
+                        if (destinasiResponse.isExist()) {
+                            if (destinasiResponse.isMissRute()) {
+                                // Jika rute miss, tampilkan toast
+                                Toast.makeText(DetailActivity.this, "no_stt miss rute", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(DetailActivity.this, "stt berhasil diinput", Toast.LENGTH_SHORT).show();
+                                fetchDetail(pengirimanId); // Refresh detail
+                            }
                     } else {
                         Toast.makeText(DetailActivity.this, "no_stt sudah diinput atau tidak valid", Toast.LENGTH_SHORT).show();
                     }
@@ -301,3 +309,4 @@ public class DetailActivity extends AppCompatActivity {
         notificationManager.notify(1, builder.build());
     }
 }
+

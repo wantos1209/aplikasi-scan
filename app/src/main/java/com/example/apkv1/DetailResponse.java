@@ -31,6 +31,7 @@ public class DetailResponse {
         private int id;
         private int userapk_id;
         private String nomor;
+        private String areaname;
         private String created_at;
         private String updated_at;
         private int totalbarang;
@@ -53,6 +54,10 @@ public class DetailResponse {
 
         public String getNomor() {
             return nomor;
+        }
+
+        public String getArea() {
+            return areaname;
         }
 
         public String getCreated_at() {
